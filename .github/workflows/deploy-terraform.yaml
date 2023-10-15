@@ -27,7 +27,4 @@ jobs:
         id:   apply
         run: |
           cd terraform/
-          terraform init
-          terraform validate
-          terraform plan 
           terraform destroy -auto-approve
