@@ -1,6 +1,4 @@
 provider "aws" {
-  
-  profile = "mvarela-io"
 
   default_tags {
     tags = {

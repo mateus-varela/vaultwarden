@@ -21,6 +21,11 @@ variable "eks_cluster_name" {
   type    = string
 }
 
+variable "cluster_version" {
+  default = "1.28"
+  type = string
+}
+
 variable "launch_template" {
   default = "mvarela-io"
 }
@@ -210,9 +215,6 @@ variable "create_with_bootstrap" {
   default = false
 }
 
-variable "bootstrap_security_group" {
-  default = ""
-}
 
 variable "project_secret_name" {
   description = "project name to referenciate to the secrets manager DB user credentials"
@@ -237,4 +239,23 @@ variable "key_name" {
 
 variable "ami" {
   default = "ami-053b0d53c279acc90"
+}
+
+## ECR
+
+variable "ecr_name" {
+  description = "The list of ecr names to create"
+  type        = string
+  default     = "mvarela-io/vaultwarden"
+}
+variable "image_mutability" {
+  description = "Provide image mutability"
+  type        = string
+  default     = "MUTABLE"
+}
+
+variable "encrypt_type" {
+  description = "Provide type of encryption here"
+  type        = string
+  default     = "KMS"
 }

@@ -3,6 +3,11 @@ variable "eks_cluster_name" {
   type = string
 }
 
+
+variable "cluster_version" {
+  type = string
+}
+
 variable "node_group_name" {
   description = "ng-mvarela-io"
   type = string

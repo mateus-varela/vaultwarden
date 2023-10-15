@@ -1,9 +1,8 @@
 module "DB_MYSQL" {
   source                   = "./_modules/rds"
-  depends_on               = [module.SG_WORKERS_RDS, module.SG_DB_BOOTSTRAP]
+  depends_on               = [module.SG_WORKERS_RDS]
   create_with_bootstrap    = "true"
   subnet_bootstrap_id      = module.SUBNETS.private_subnets[0]
-  bootstrap_security_group = module.SG_DB_BOOTSTRAP.security_group_id
   vpc_security_group_ids   = module.SG_WORKERS_RDS.security_group_id
   identifier               = "db-vaultwarden"
   subnet_ids               = module.SUBNETS.private_subnets

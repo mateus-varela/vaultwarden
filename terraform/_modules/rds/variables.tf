@@ -59,9 +59,7 @@ variable "vpc_security_group_ids" {
   
 }
 
-variable "bootstrap_security_group" {
-  
-}
+
 variable "parameter_group_name" {
   type    = string
   default = "custom-mysql-parameters"
