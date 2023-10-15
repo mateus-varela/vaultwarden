@@ -1,4 +1,4 @@
-Criar github actions pipeline para deploy do terraform 
+Criar github actions pipeline para deploy do terraform  # ok
 Ajustar permissões do Cluster para meu IAM pois estou sem permissão
 Adicionar + 1 vm para Ansible executar scripts de instalação
 Criar 2 grupos, 1 grupo (node) para Jenkins e outro para SonarQube
