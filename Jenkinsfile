@@ -4,18 +4,30 @@ pipeline {
         jdk 'Java17'
         maven 'Maven3'
     }
+
     environment {
-        AWS_ACCOUNT_ID="YOUR_ACCOUND_ID"
-        AWS_DEFAULT_REGION="CREATED_AWS_ECR_REPO" #e.g. us-east-1
-        IMAGE_REPO_NAME="ECR_REPO_NAME"
-        IMAGE_TAG="IMAGE_TAG" #eg. v1, latest
+        AWS_ACCOUNT_ID="878893543361"
+        AWS_DEFAULT_REGION="us-east-1"
+        IMAGE_REPO_NAME="mvarela-io/vaultwarden"
+        IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
+
+    
 
     stages {
         stage("Cleanup Workspace"){
             steps {
                 cleanWs()
+            }
+        }
+
+        stage('Logging into AWS ECR') {
+            steps {
+                script {
+                sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                }
+                 
             }
         }
 
@@ -28,7 +40,7 @@ pipeline {
         stage("Build Docker Image"){
             steps {
                 script {
-                    docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+                    docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
                 }
             }
         }
@@ -36,9 +48,8 @@ pipeline {
         stage("Push Docker Image to ECR"){
             steps {
                 script {
-                    docker login -u AWS -p $(aws ecr get-login-password --region $AWS_DEFAULT_REGION) $REPOSITORY_URI
-                    docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $REPOSITORY_URI:$IMAGE_TAG
-                    docker push $REPOSITORY_URI:$IMAGE_TAG
+                    sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:${IMAGE_TAG}"
+                    sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
                 }
             }
         }
@@ -46,9 +57,12 @@ pipeline {
         stage("Trivy Scan"){
             steps {
                 script {
-                    docker run -v /var/run/docker.sock:var/run/docker.sock aquasec/trivy image $REPOSITORY_URI:$IMAGE_TAG --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table
+                    docker run -v /var/run/docker.sock:var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table
                 }
             }
         }
+ 
     }
 }
+
+---
