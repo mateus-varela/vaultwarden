@@ -1,0 +1,106 @@
+---
+- name: Install Jenkins on Ubuntu Server
+  hosts: ec2_instances
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install curl
+      apt:
+        name: curl
+        state: present
+
+    - name: Install gnupg
+      apt:
+        name: gnupg
+        state: present
+
+    - name: Add Jenkins APT keyring
+      shell: "curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc"
+      args:
+        executable: /bin/bash
+
+    - name: Add Jenkins APT repository
+      shell: sudo sh -c 'echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+      args:
+        executable: /bin/bash
+
+    - name: Install Java
+      apt:
+        name: openjdk-11-jre
+        state: present
+
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+
+    - name: Retrieve initialAdminPassword file
+      fetch:
+        src: /var/lib/jenkins/secrets/initialAdminPassword
+        dest: "{{ playbook_dir }}/initialAdminPassword"
+        flat: yes
+
+- name: Change hostname for ec2_master
+  hosts: ec2_master
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Set hostname to Jenkins-Master
+      lineinfile:
+        path: /etc/hostname
+        regexp: '^.*$'
+        line: Jenkins-Master
+
+    - name: Update /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^127.0.1.1'
+        line: 127.0.1.1 Jenkins-Master
+
+    - name: Reboot for hostname change to take effect
+      command: reboot
+      async: 0
+      poll: 0
+      ignore_errors: yes
+
+- name: Change hostname for ec2_slave
+  hosts: ec2_slave
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Set hostname to Jenkins-Slave
+      lineinfile:
+        path: /etc/hostname
+        regexp: '^.*$'
+        line: Jenkins-Slave
+
+    - name: Update /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^127.0.1.1'
+        line: 127.0.1.1 Jenkins-Slave
+
+    - name: Reboot for hostname change to take effect
+      command: reboot
+      async: 0
+      poll: 0
+      ignore_errors: yes
