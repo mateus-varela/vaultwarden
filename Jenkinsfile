@@ -1,9 +1,5 @@
 pipeline {
     agent { label 'Jenkins-Agent' }
-    tools {
-        jdk 'Java17'
-        maven 'Maven3'
-    }
 
     environment {
         AWS_ACCOUNT_ID="878893543361"
@@ -12,8 +8,6 @@ pipeline {
         IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
-
-    
 
     stages {
         stage("Cleanup Workspace"){
@@ -57,11 +51,10 @@ pipeline {
         stage("Trivy Scan"){
             steps {
                 script {
-                    docker run -v /var/run/docker.sock:var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table
+                    sh "docker run -v /var/run/docker.sock:var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table"
                 }
             }
         }
- 
     }
 }
 
