@@ -1,98 +1,83 @@
-# How to execute and deploy terraform
+# Web Application Project
 
-## Using AWS CLI
-The recommended way, following good practices, is to use the AWS CLI logged into AWS, and then run terraform
+Welcome to my project portfolio! This repository documents my journey in creating a web application in several phases using modern technologies and tools. Here are the key milestones of the project:
 
-# Step-by-Step Guide: AWS IAM Setup, AWS CLI, and Terraform
+![App Structure](app-vaultwarden.jpeg)
 
-## Step 1: Create an IAM User in AWS
+## Phase 1: Infrastructure as Code
 
-1. Access the [AWS Management Console](https://aws.amazon.com/).
-2. Log in with your administrator credentials or a user with permissions to create IAM users.
-3. In the navigation pane, go to "IAM" (Identity and Access Management).
+- I used Terraform to create infrastructure in AWS as code. All EC2 instances, networks, and necessary resources were automatically provisioned.
+- I integrated infrastructure deployment with GitHub Actions, ensuring that changes to infrastructure code were efficiently deployed.
+- Using Ansible, I automated the installation and configuration of Jenkins on the newly created EC2 instances.
 
-### Create a User:
+## Phase 2: Build and Deploy Pipeline
 
-[AWS IAM Documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+- I configured build and deploy pipelines for my application, ensuring that changes were automatically tested, compiled, and deployed.
+- I added security with DevSecOps by using Trivy to scan Docker images for critical vulnerabilities before pushing them to Amazon Elastic Container Registry (ECR).
 
-4. In the IAM navigation pane, click "Users."
-5. Click "Add user" and follow the instructions to set up the user.
-6. In the "Permissions" section, you can note permissions directly for the user.
-7. Note the username and the generated access credentials (Access Key and Secret Access Key).
+## Phase 3: Kubernetes Deployment
 
-## Step 2: Configure AWS CLI using `aws configure`
+- I created Kubernetes manifests using Jenkins pipelines to automate deployment configurations.
+- I installed Argo CD on the Kubernetes cluster to ensure continuous deployments and application management.
+- I used Traefik as the ingress controller to route application traffic.
 
-Now that you have an IAM user, you can set up the AWS CLI to authenticate to your AWS account.
+## Phase 4: Monitoring
 
-1. Open your terminal or command prompt.
+- I implemented a robust monitoring system using Prometheus, VictoriaMetrics, and Grafana.
+- I ensured that the application's health was monitored and that important metrics were visible in real-time.
 
-2. Run the `aws configure` command and follow the instructions:
+## Emphasizing Security and Best Practices
 
-   - **AWS Access Key ID**: Enter the access key generated for the IAM user.
-   - **AWS Secret Access Key**: Enter the secret access key generated for the IAM user.
-   - **Default region name**: Enter the AWS region you want to use (example., `sa-east-1`).
-   - **Default output format**: You can leave this blank or choose an output format (example., `json`).
+- Security was a top priority throughout the project. DevSecOps practices were implemented to identify and mitigate vulnerabilities early in the development pipeline.
+- All infrastructure and deployments followed best practices to enhance reliability and maintainability.
+- Automation and CI/CD pipelines were used to streamline development and deployment processes.
+- The entire project was designed with scalability in mind, enabling future growth and expansion.
 
-After configuring the AWS CLI, you are ready to use Terraform.
+This is an overview of my project, demonstrating my skills in DevOps, automation, security, and container orchestration. Feel free to explore the details in each phase of this repository to learn more about the technologies and processes involved.
+
+Thank you for checking out my project portfolio!
+
+**If you have any questions or would like to get in touch, please don't hesitate to send me a message.**
+# Web Application Project
+
+Welcome to my project portfolio! This repository documents my journey in creating a web application in several phases using modern technologies and tools. Here are the key milestones of the project:
+
+![App Structure](app-vaultwarden.jpeg)
+
+## Phase 1: Infrastructure as Code
+
+- I used Terraform to create infrastructure in AWS as code. All EC2 instances, networks, EKS, ECR and necessary resources were automatically provisioned.
+- I integrated infrastructure deployment with GitHub Actions, ensuring that changes to infrastructure code were efficiently deployed.
+- Using Ansible, I automated the installation and configuration of Jenkins on the newly created EC2 instances.
+
+## Phase 2: Build and Deploy Pipeline
+
+- I configured build and deploy pipelines for my application using Jenkins, ensuring that changes were automatically tested, compiled, and deployed.
+- I added security with DevSecOps by using Trivy to scan Docker images for critical vulnerabilities before pushing them to Amazon Elastic Container Registry (ECR).
+
+## Phase 3: Kubernetes Deployment
+
+- I created Kubernetes manifests using Jenkins pipelines to automate deployment configurations.
+- I installed Argo CD on the Kubernetes cluster to ensure continuous deployments and application management.
+- I used Traefik as the ingress controller to route application traffic.
+
+## Phase 4: Monitoring
+
+- I implemented a robust monitoring system using Prometheus, VictoriaMetrics, and Grafana.
+- I ensured that the application's health was monitored and that important metrics were visible in real-time.
+
+## Considerations
+
+- Security was a top priority throughout the project. DevSecOps practices were implemented to identify and mitigate vulnerabilities early in the development pipeline.
+- All infrastructure and deployments followed best practices to enhance reliability and maintainability.
+- Automation and CI/CD pipelines were used to streamline development and deployment processes.
+- The entire project was designed with scalability in mind, enabling future growth and expansion.
+
+This is an overview of my project, demonstrating my skills in DevOps, automation, security, and container orchestration. Feel free to explore the details in each phase of this repository to learn more about the technologies and processes involved.
+
+Thank you for checking out my project portfolio!
+
+## Contact
 
 
-This document outlines the step-by-step process for configuring your Terraform environment to manage infrastructure using remote state stored in an AWS S3 bucket.
-
-## Prerequisites
-
-1. Ensure that Terraform is installed on your local machine.
-
-## Step 1: Create S3 Bucket for Remote State
-
-Navigate to the `/bucket` directory in your project and perform the following steps:
-
-1. Open a terminal in the `/bucket` directory.
-
-2. Initialize the Terraform configuration:
-
-   ```shell
-   terraform init
-   ```
-3. Apply the Terraform configuration to create the S3 bucket:
-   ```shell
-   terraform apply
-   ```
-This will create the S3 bucket that will be used to store the remote state.
-
-# Step 2: Configure Terraform in the Root Directory
-
-This step explains how to configure Terraform in the root directory of your project.
-
-## Procedure
-
-1. Open a terminal in the root directory of your project.
-
-2. Initialize the Terraform configuration by running the following command:
-
-   ```shell
-   terraform init
-   ```
-3. Apply the Terraform configuration to provision your infrastructure:
-   ```shell
-   terraform apply
-   ```
-This configuration will use the S3 bucket created in Step 1 for storing remote state. All Terraform state will be securely stored remotely in this bucket.
-
-
-**Accessing Database Passwords**
-
-This section explains how to access the passwords for your database resources.
-
-## Procedure
-
-1. Log in to the AWS Management Console.
-
-2. Navigate to the S3 section.
-
-3. Locate and select the S3 bucket that was created in Step 1.
-
-4. Within the bucket, find the remote state file.
-
-5. Open the remote state file and search for the password associated with your database resource. The password will be encrypted and stored within the AWS environment.
-
-By following these steps, you will be able to securely manage your infrastructure using Terraform and access the necessary credentials for your database resources.
+**To get in touch, email [your-email@example.com] or connect on [LinkedIn](https://www.linkedin.com/in/mateus-varela/).**
