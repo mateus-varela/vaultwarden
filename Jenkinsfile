@@ -39,7 +39,7 @@ pipeline {
             }
         }
 
-        stage("Tag Docker Image"){
+        stage("Tag Docker Image") {
             steps {
                 script {
                     sh "docker tag vaultwarden/server ${REPOSITORY_URI}:${IMAGE_TAG}"
@@ -47,17 +47,19 @@ pipeline {
             }
         }
 
-        stage("Push Docker Image to ECR"){
+        stage("Trivy Scan and Docker Image push") {
             steps {
                 script {
-                    sh "docker push ${REPOSITORY_URI}:${IMAGE_TAG}"
-                }
-            }
-        }
-        stage("Trivy Scan"){
-            steps {
-                script {
-                    sh "docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table"
+                    // Execute trivy scan
+                    def scanOutput = sh(script: "docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table", returnStatus: true)
+
+                    if (scanOutput == 0) {
+                        echo "No critical issues found. Proceeding with the push to ECR."
+                        // Now you can push the image to ECR
+                        sh "docker push ${REPOSITORY_URI}:${IMAGE_TAG}"
+                    } else {
+                        error "Critical security issues were found. We will not proceed with the image push"
+                    }
                 }
             }
         }
