@@ -51,7 +51,7 @@ pipeline {
             steps {
                 script {
                     // Execute trivy scan
-                    def scanOutput = sh(script: "docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table", returnStatus: true)
+                    def scanOutput = sh(script: "docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress --severity HIGH,CRITICAL --exit-code 0 --format table", returnStatus: true)
 
                     if (scanOutput == 0) {
                         echo "No critical issues found. Proceeding with the push to ECR."
