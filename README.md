@@ -40,6 +40,6 @@ Thank you for checking out my project portfolio!
 ## Contact
 
 
-**To get in touch:
+**To get in touch:**
 - ✉️ **Email:** [mateus@mvarela.io](mailto:mateus@mvarela.io)
 - 💼 **LinkedIn:** [linkedin.com/in/mateus-varela](https://www.linkedin.com/in/mateus-varela/)
