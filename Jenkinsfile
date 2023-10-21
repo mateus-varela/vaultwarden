@@ -61,19 +61,20 @@ pipeline {
 }
 
 
-//         stage("Trivy Scan and Docker mage push") {
-//             steps {
-//                 script {
-//                     // Execute trivy scan
-//                     def scanOutput = sh(script: "docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table", returnStatus: true)
+        stage("Trivy Scan and Docker Image push (unused)") {
+            when {
+                expression { false } // Stage will not be used, just used for example.
+            }
+            steps {
+                script {
+                    def scanOutput = sh(script: "docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${REPOSITORY_URI}:${IMAGE_TAG} --no-progress -scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table", returnStatus: true)
 
-//                     if (scanOutput == 0) {
-//                         echo "No critical issues found. Proceeding with the push to ECR."
-//                         // Now you can push the image to ECR
-//                         sh "docker push ${REPOSITORY_URI}:${IMAGE_TAG}"
-//                     } else {
-//                         error "Critical security issues were found. We will not proceed with the image push"
-//             }
-//         }
-//     }
-// }
+                    if (scanOutput == 0) {
+                        echo "No critical issues found. Proceeding with the push to ECR."
+                        sh "docker push ${REPOSITORY_URI}:${IMAGE_TAG}"
+                    } else {
+                        error "Critical security issues were found. We will not proceed with the image push."
+                    }
+                }
+            }
+        }
