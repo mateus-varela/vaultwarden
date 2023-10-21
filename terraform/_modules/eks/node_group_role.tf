@@ -33,3 +33,26 @@ resource "aws_iam_role_policy_attachment" "ec2_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks_nodes.name
 }
+
+resource "aws_iam_policy" "ec2_full_access_policy" {
+  name = "ec2-full-access-policy"
+  policy = <<-EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "ebs_full_access_policy_attachment" {
+  role = aws_iam_role.eks_nodes.name
+  policy_arn = aws_iam_policy.ec2_full_access_policy.arn
+}

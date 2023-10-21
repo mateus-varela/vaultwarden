@@ -222,3 +222,15 @@ variable "encrypt_type" {
   type        = string
   default     = "KMS"
 }
+
+variable "traefik_chart_version" {
+  description = "Version of Traefik chart to install"
+  type        = string
+  default     = "21.1.0"
+}
+
+variable "timeout_seconds" {
+  type        = number
+  description = "Helm chart deployment can sometimes take longer than the default 5 minutes. Set a custom timeout here."
+  default     = 800
+}

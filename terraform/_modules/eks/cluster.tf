@@ -24,7 +24,7 @@ resource "aws_eks_addon" "vpc_cni" {
   addon_name = "vpc-cni"
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
-  addon_version = "v1.12.5-eksbuild.2"
+  addon_version = "v1.14.1-eksbuild.1"
 }
 
 resource "aws_eks_addon" "kube_proxy" {
@@ -32,7 +32,7 @@ resource "aws_eks_addon" "kube_proxy" {
   addon_name = "kube-proxy"
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
-  addon_version = "v1.26.2-eksbuild.1"
+  addon_version = "v1.28.1-eksbuild.1"
 }
 
 resource "aws_eks_addon" "coredns" {
@@ -40,7 +40,7 @@ resource "aws_eks_addon" "coredns" {
   addon_name = "coredns"
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
-  addon_version = "v1.9.3-eksbuild.2"
+  addon_version = "v1.10.1-eksbuild.2"
 }
 
 resource "aws_eks_addon" "ebs_csi" {

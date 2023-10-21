@@ -1,0 +1,11 @@
+---
+global:
+  image:
+    tag: "v2.6.6"
+
+dex:
+  enabled: false
+
+server:
+  extraArgs:
+    - --insecure

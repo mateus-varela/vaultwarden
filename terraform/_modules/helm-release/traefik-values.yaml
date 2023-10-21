@@ -1,0 +1,79 @@
+# Create an IngressRoute for the dashboard
+ingressRoute:
+  dashboard:
+    enabled: true
+    # Custom match rule with host domain
+    matchRule: Host(`traefik.mvarela.io`)
+    entryPoints: ["websecure"]
+    # Add custom middlewares : authentication and redirection
+    middlewares:
+      - name: traefik-dashboard-auth
+
+# Create the custom middlewares used by the IngressRoute dashboard (can also be created in another way).
+# /!\ Yes, you need to replace "changeme" password with a better one. /!\
+extraObjects:
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: traefik-dashboard-auth-secret
+    type: kubernetes.io/basic-auth
+    stringData:
+      username: admin
+      password: 89jkda89AJKds
+
+  - apiVersion: traefik.io/v1alpha1
+    kind: Middleware
+    metadata:
+      name: traefik-dashboard-auth
+    spec:
+      basicAuth:
+        secret: traefik-dashboard-auth-secret
+accessLogs:
+  enabled: false
+acme:
+  challengeType: "http-01"
+  domains:
+    enabled: true
+    domainsList:
+      - main: "mvarela.io"
+      - sans:
+        - "www.mvarela.io"
+  email: "mateus@mvarela.io"
+  enabled: true
+  logging: true
+  onHostRule: true
+  persistence:
+    enabled: false
+  staging: false
+externalTrafficPolicy: Local
+forwardedHeaders:
+  enabled: true
+  trustedIPs:
+    - 0.0.0.0/0
+kvprovider:
+  storeAcme: true
+  consul:
+    endpoint: "consul:8500"
+    prefix: traefik
+    watch: true
+rbac:
+  enabled: true
+ssl:
+  cipherSuites: [
+    "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+    "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+    "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305",
+    "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305",
+    "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+    "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256",
+    "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"
+  ]
+  enabled: true
+  enforced: true
+  generateTLS: false
+  tlsMinVersion: VersionTLS12
+cpuRequest: 200m
+memoryRequest: 100Mi
+cpuLimit: 400m
+memoryLimit: 300Mi
