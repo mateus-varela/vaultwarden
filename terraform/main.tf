@@ -43,45 +43,44 @@ module "SUBNETS" {
 
 
 # EKS Cluster
-module "EKS" {
-  source = "./_modules/eks"
-  # Cluster
-  vpc_id                 = module.VPC.vpc_id
-  cluster_sg_name        = "${var.eks_cluster_name}-cluster-sg-mvarela-io"
-  nodes_sg_name          = "${var.eks_cluster_name}-node-sg-mvarela-io"
-  eks_cluster_name       = var.eks_cluster_name
-  eks_cluster_subnet_ids = module.SUBNETS.private_subnets
-  cluster_version        = var.cluster_version
+# module "EKS" {
+#   source = "./_modules/eks"
+#   # Cluster
+#   vpc_id                 = module.VPC.vpc_id
+#   cluster_sg_name        = "${var.eks_cluster_name}-cluster-sg-mvarela-io"
+#   nodes_sg_name          = "${var.eks_cluster_name}-node-sg-mvarela-io"
+#   eks_cluster_name       = var.eks_cluster_name
+#   eks_cluster_subnet_ids = module.SUBNETS.private_subnets
+#   cluster_version        = var.cluster_version
 
-  # Node group configuration (including autoscaling configurations)
-  pvt_desired_size        = 1
-  pvt_max_size            = 2
-  pvt_min_size            = 1
-  endpoint_private_access = true
-  node_group_name         = "${var.eks_cluster_name}-node-group"
-  private_subnet_ids      = module.SUBNETS.private_subnets
+#   # Node group configuration (including autoscaling configurations)
+#   pvt_desired_size        = 2
+#   pvt_max_size            = 3
+#   pvt_min_size            = 2
+#   endpoint_private_access = true
+#   node_group_name         = "${var.eks_cluster_name}-node-group"
+#   private_subnet_ids      = module.SUBNETS.private_subnets
 
-}
+# }
 
 module "ECR" {
   source           = "./_modules/ecr"
   ecr_name         = var.ecr_name
   tags             = var.tags
   image_mutability = var.image_mutability
+ }
 
-}
+# module "NGINX_INGRESS_CONTROLLER" {
+#   source             = "./_modules/nginx-ingress-controller"
+#   security_group     = module.SG_INGRESS_CONTROLLER.security_group_id
+#   ingress_class_name = "nginx"
+#   public_subnets_ids = module.SUBNETS.public_subnets
+# }
 
-module "NGINX_INGRESS_CONTROLLER" {
-  source             = "./_modules/nginx-ingress-controller"
-  security_group     = module.SG_INGRESS_CONTROLLER.security_group_id
-  ingress_class_name = "nginx"
-  public_subnets_ids = module.SUBNETS.public_subnets
-}
-
-module "CERTMANAGER" {
-  source             = "./_modules/certmanager"
-  public_subnets_ids = module.SUBNETS.public_subnets
-}
+# module "CERTMANAGER" {
+#   source             = "./_modules/certmanager"
+#   public_subnets_ids = module.SUBNETS.public_subnets
+# }
 
 module "EC2_JENKINS_MASTER" {
   source = "./_modules/ec2"
@@ -93,10 +92,9 @@ module "EC2_JENKINS_MASTER" {
   vpc_security_group_ids      = [module.SG_EC2.security_group_id]
   associate_public_ip_address = true
 
-  tags = merge(var.tags, {
+  tags = {
     Name = "Jenkins-Master"
-
-  })
+  }
 }
 
 module "EC2_JENKINS_AGENT" {
@@ -109,40 +107,21 @@ module "EC2_JENKINS_AGENT" {
   vpc_security_group_ids      = [module.SG_EC2.security_group_id]
   associate_public_ip_address = true
 
-  tags = merge(var.tags, {
+  tags = {
     Name = "Jenkins-Agent"
-
-  })
+  }
 }
+# module "EC2_ANSIBLE" {
+#   source = "./_modules/ec2"
 
-module "EC2_SONARQUBE" {
-  source = "./_modules/ec2"
+#   ami                         = var.ami
+#   instance_type               = var.instance_type
+#   key_name                    = var.key_name
+#   subnet_id                   = module.SUBNETS.public_subnets[0]
+#   vpc_security_group_ids      = [module.SG_EC2.security_group_id]
+#   associate_public_ip_address = true
 
-  ami                         = var.ami
-  instance_type               = "t2.medium"
-  key_name                    = var.key_name
-  subnet_id                   = module.SUBNETS.public_subnets[0]
-  vpc_security_group_ids      = [module.SG_EC2.security_group_id]
-  associate_public_ip_address = true
-
-  tags = merge(var.tags, {
-    Name = "SonarQube"
-
-  })
-}
-
-module "EC2_ANSIBLE" {
-  source = "./_modules/ec2"
-
-  ami                         = var.ami
-  instance_type               = var.instance_type
-  key_name                    = var.key_name
-  subnet_id                   = module.SUBNETS.public_subnets[0]
-  vpc_security_group_ids      = [module.SG_EC2.security_group_id]
-  associate_public_ip_address = true
-
-  tags = merge(var.tags, {
-    Name = "Ansible"
-
-  })
-}
+#   tags = {
+#     Name = "Ansible"
+#   }
+# }

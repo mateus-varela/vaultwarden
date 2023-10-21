@@ -8,12 +8,17 @@ variable "instance_type" {
 
 variable "key_name" {
   type = string
+  default = "mvarela-io"
 }
 
 variable "subnet_id" {
 }
 
-variable "tags" {}
+variable "tags" {
+  description = "A mapping of tags to assign to ec2"
+  type        = map(string)
+  default     = {}
+}
 
 variable "vpc_security_group_ids" {}
 

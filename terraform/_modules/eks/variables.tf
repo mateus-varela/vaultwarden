@@ -53,9 +53,9 @@ variable "disk_size" {
   default = 100
 }
 
-variable "instance_types" {
+variable "eks_instance_types" {
   type = list(string)
-  default = ["t2.micro"]
+  default = ["t3.medium"]
   description = "Set of instance types associated with the EKS Node Group. Defaults to t3.medium"
 }
 

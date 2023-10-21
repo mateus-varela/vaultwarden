@@ -26,7 +26,7 @@ resource "aws_eks_node_group" "main" {
   }
 
   ami_type       = var.ami_type
-  instance_types = var.instance_types
+  instance_types = var.eks_instance_types
 
   scaling_config {
     desired_size = var.pvt_desired_size

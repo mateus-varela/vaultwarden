@@ -23,7 +23,7 @@ variable "eks_cluster_name" {
 
 variable "cluster_version" {
   default = "1.28"
-  type = string
+  type    = string
 }
 
 variable "launch_template" {
@@ -62,7 +62,7 @@ variable "private_subnets" {
 
 variable "security_group_ids" {
   description = "A list of security groups the ephemeral instance will belong to"
-  type = list(string)
+  type        = list(string)
   default     = []
 }
 
@@ -94,48 +94,11 @@ variable "instance_type" {
 }
 
 variable "tags" {
-  description = "A mapping of tags to assign to all resources"
-  type        = map(any)
-  default = {
-    Terraform = "true"
-  }
+  description = "A mapping of tags to assign to ec2"
+  type        = map(string)
+  default     = {}
 }
 
-variable "create_hapi_dev_db" {
-  type    = bool
-  default = true
-}
-
-variable "create_tac_dev_db" {
-  type    = bool
-  default = true
-}
-
-variable "create_keycloak_dev_db" {
-  type    = bool
-  default = true
-}
-
-variable "create_openfga_dev_db" {
-  type    = bool
-  default = true
-}
-
-variable "create_tac_tst_db" {
-  type    = bool
-  default = true
-}
-
-variable "create_hapi_tst_db" {
-  type    = bool
-  default = true
-}
-
-variable "create_keycloak_tst_db" {
-  type    = bool
-  default = true
-
-}
 variable "storage_type" {
   description = "One of 'standard' (magnetic), 'gp2' (general purpose SSD), or 'io1' (provisioned IOPS SSD). The default is 'io1' if iops is specified, 'standard' if not. Note that this behaviour is different from the AWS web console, where the default is 'gp2'."
   type        = string
@@ -233,7 +196,7 @@ variable "environment" {
 ## EC2
 
 variable "key_name" {
-  type = string
+  type    = string
   default = "mvarela-io"
 }
 
