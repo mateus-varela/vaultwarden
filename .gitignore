@@ -1,8 +1,7 @@
 .terraform/
-todo.txt
 ansible/access
 mvarela-io.pem
-todo.txt
+todo
 ansible/access
 mvarela-io.pem
 terraform/.terraform/
