@@ -2,18 +2,21 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: vaultwarden-ingress
+  namespace: vaultwarden
 spec:
   ingressClassName: traefik
   rules:
-  - host: vaultwarden.mvarela.io
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: vaultwarden-service
-          servicePort: 80
+    - host: vaultwarden.mvarela.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vaultwarden-service
+                port:
+                  number: 80
   tls:
   - hosts:
     - vaultwarden.mvarela.io
-  annotations:
-    cert-manager.io/issuer: letsencrypt
+    secretName: vaultwarden-cert

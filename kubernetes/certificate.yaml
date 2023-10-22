@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vaultwarden-cert
+  namespace: vaultwarden
+spec:
+  secretName: letsencrypt
+  issuerRef:
+    name: letsencrypt 
+    kind: ClusterIssuer
+  commonName: vaultwarden.mvarela.io
+  dnsNames:
+    - vaultwarden.mvarela.io
