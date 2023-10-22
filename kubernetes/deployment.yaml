@@ -21,10 +21,3 @@ spec:
               cpu: "500m"
           ports:
             - containerPort: 80
-          volumeMounts:
-            - name: data
-              mountPath: /data
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: vaultwarden-pvc
