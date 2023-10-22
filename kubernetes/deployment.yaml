@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vaultwarden-deployment
+  name: vaultwarden
 spec:
   replicas: 2
   selector:
@@ -21,3 +21,45 @@ spec:
               cpu: "500m"
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: vaultwarden-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vaultwarden-service
+spec:
+  selector:
+    app: vaultwarden
+
+  ports:
+    - port: 80
+      targetPort: 80
+
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vaultwarden-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: vaultwarden.mvarela.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: vaultwarden-service
+          servicePort: 80
+  tls:
+  - hosts:
+    - vaultwarden.mvarela.io
+    secretName: vaultwarden-cert
+  annotations:
+    cert-manager.io/issuer: letsencrypt
