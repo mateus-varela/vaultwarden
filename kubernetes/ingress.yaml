@@ -1,4 +1,4 @@
-# apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: vaultwarden-ingress
@@ -15,6 +15,5 @@ spec:
   tls:
   - hosts:
     - vaultwarden.mvarela.io
-    secretName: vaultwarden-cert
   annotations:
     cert-manager.io/issuer: letsencrypt

@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  namespace: traefik
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`traefik.mvarela.io`)
+      kind: Rule
+      services: # Service to redirect requests to
+        - name: api@internal # Special service created by Traefik pod
+          kind: TraefikService
+      middlewares:
+        - name: auth
+  tls:
+    secretName: traefik.mvarela.io
