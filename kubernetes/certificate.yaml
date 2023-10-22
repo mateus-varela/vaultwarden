@@ -8,6 +8,6 @@ spec:
   issuerRef:
     name: letsencrypt 
     kind: ClusterIssuer
-  commonName: vaultwarden.mvarela.io
+  commonName: vault.mvarela.io
   dnsNames:
-    - vaultwarden.mvarela.io
+    - vault.mvarela.io

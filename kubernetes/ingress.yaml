@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: vaultwarden.mvarela.io
+    - host: vault.mvarela.io
       http:
         paths:
           - path: /
@@ -18,5 +18,5 @@ spec:
                   number: 80
   tls:
   - hosts:
-    - vaultwarden.mvarela.io
+    - vault.mvarela.io
     secretName: vaultwarden-cert
