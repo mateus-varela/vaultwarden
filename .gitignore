@@ -5,3 +5,4 @@ todo
 ansible/access
 mvarela-io.pem
 terraform/.terraform/
+terraform/

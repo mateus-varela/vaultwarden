@@ -54,32 +54,29 @@ module "ARGOCD" {
 # k get secrets argocd-initial-admin-secret -o yaml -n argocd
 }
 
-module "CONSUL" {
-  source = "./_modules/helm-release"
-  namespace = "consul"
-  repository = "https://helm.releases.hashicorp.com"
+# module "CONSUL" {
+#   source = "./_modules/helm-release"
+#   namespace = "consul"
+#   repository = "https://marketplace.azurecr.io/helm/v1/repo"
 
-  app = {
-    chart         = "hashicorp/consul"
-    force_update  = true
-    name          = "consul"
-    namespace     = "kube-system"
-    recreate_pods = true
-    reuse_values  = true
-  }
+#   app = {
+#     chart         = "azure-marketplace//consul"
+#     force_update  = true
+#     name          = "consul"
+#     recreate_pods = true
+#     reuse_values  = true
+#   }
 
-  values = [<<EOF
-ImageTag: "1.4.0"
-EOF
-  ]
+#   values = [<<EOF
+# ImageTag: "1.4.0"
+# EOF
+#   ]
 
-}
+# }
 
 module "TRAEFIK" {
   source = "./_modules/helm-release"
-
-  depends_on = [module.CONSUL]
-
+  
   namespace  = "traefik"
   repository = "https://traefik.github.io/charts"
 
@@ -90,6 +87,7 @@ module "TRAEFIK" {
     wait             = true
     reuse_values     = true
     recreate_pods    = true
+    version          = "21.1.0"
     chart            = "traefik"
     timeout          = var.timeout_seconds
   }

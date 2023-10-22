@@ -6,7 +6,6 @@ Criar script Ansible para instalar SonarQube e Ansible
 Ajustar acessos SSH e etc 
 Adicionar mais um resource para criação de ECR Registry
 Realizar configurações do Jenkins
-Realizar configurações do SonarQube
 Realizar deploy do certmanager etc
 Realizar build imagem docker via Jenkins e enviar para ECR
 Instalação e configuração do ArgoCD

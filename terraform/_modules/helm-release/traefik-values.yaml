@@ -52,11 +52,7 @@ forwardedHeaders:
     - 0.0.0.0/0
 kvprovider:
   storeAcme: true
-  consul:
-    endpoint: "consul:8500"
-    prefix: traefik
-    watch: true
-rbac:
+  rbac:
   enabled: true
 ssl:
   cipherSuites: [
