@@ -41,12 +41,17 @@ I added security with DevSecOps by using Trivy to scan Docker images for critica
 
 ## Considerations and web application running
 
-![Vaultwarden](application-working.jpg)
-
 - Security was a top priority throughout the project. DevSecOps practices were implemented to identify and mitigate vulnerabilities early in the development pipeline.
 - All infrastructure and deployments followed best practices to enhance reliability and maintainability.
 - Automation and CI/CD pipelines were used to streamline development and deployment processes.
 - The entire project was designed with scalability in mind, enabling future growth and expansion.
+- Additionally, the use of Cert-Manager has enabled me to secure my applications with ease. SSL/TLS certificates from Let's Encrypt are automatically managed, providing encrypted communication and a trusted identity for my services.
+
+- As part of my design, I've chosen to manage my data using a Persistent Volume Claim (PVC). This allows my Vault to securely store its data with resilience, guaranteeing its availability and integrity. The choice of a PVC provides flexibility, though I considered using an external database, the cost-efficiency and simplicity of a PVC prevailed.
+
+**You can check the results of the project in the attached image**
+
+![Vaultwarden](application-working.jpg)
 
 This is an overview of my project, demonstrating my skills in DevOps, automation, security, and container orchestration. Feel free to explore the details in each phase of this repository to learn more about the technologies and processes involved.
 
