@@ -1,22 +1,21 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: vaultwarden-ingress
   namespace: vaultwarden
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: basic-auth@kubernetescrd
+    kubernetes.io/ingress.class: traefik-external
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
-  ingressClassName: traefik
-  rules:
-    - host: vault.mvarela.io
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: vaultwarden-service
-                port:
-                  number: 80
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`vaultwarden.mvarela.io`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: vaultwarden-service
+          port: 80
   tls:
-  - hosts:
-    - vault.mvarela.io
-    secretName: vaultwarden-cert
+    secretName: letsencrypt2
