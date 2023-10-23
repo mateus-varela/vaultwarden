@@ -14,20 +14,34 @@ Welcome to my project portfolio! This repository documents my journey in creatin
 ## Phase 2: Build and Deploy Pipeline
 
 - I configured build and deploy pipelines for my application using Jenkins, ensuring that changes were automatically tested, compiled, and deployed.
-- I added security with DevSecOps by using Trivy to scan Docker images for critical vulnerabilities before pushing them to Amazon Elastic Container Registry (ECR).
+
+![Trivy Scan Fail](trivy.jpg)
+![Trivy Scan Done](trivy-ok.jpg)
+
+I added security with DevSecOps by using Trivy to scan Docker images for critical vulnerabilities before pushing them to Amazon Elastic Container Registry (ECR).
+
+- **Trivy Scan Fail:** This image represents a Trivy scan result for a Docker image. When Trivy detects critical vulnerabilities, the image is marked as "fail," and it won't be pushed to ECR, ensuring that only secure images are deployed.
+
+- **Trivy Scan Done:** This image represents a Trivy scan result for a Docker image without critical vulnerabilities. When Trivy scans the image and finds no critical vulnerabilities, it's marked as "done," and the image is pushed to ECR, ensuring that only secure images are deployed.
+
 
 ## Phase 3: Kubernetes Deployment
 
 - I created Kubernetes manifests using Jenkins pipelines to automate deployment configurations.
 - I installed Argo CD on the Kubernetes cluster to ensure continuous deployments and application management.
+![Argo CD](argo-cd.jpg)
 - I used Traefik as the ingress controller to route application traffic.
+![Traefik](traefik.jpg)
+
 
 ## Phase 4: Monitoring
 
 - Loading... This part will be done in the next months. New projects coming for now.
 
 
-## Considerations
+## Considerations and web application running
+
+![Vaultwarden](application-working.jpg)
 
 - Security was a top priority throughout the project. DevSecOps practices were implemented to identify and mitigate vulnerabilities early in the development pipeline.
 - All infrastructure and deployments followed best practices to enhance reliability and maintainability.
@@ -38,7 +52,9 @@ This is an overview of my project, demonstrating my skills in DevOps, automation
 
 Thank you for checking out my project portfolio!
 
-* I also added a README.md file in terraform, to give you more details about how to use it.
+* I also added a README.md file in terraform folder, to give you more details about how to use it.
+
+
 
 ## Contact
 

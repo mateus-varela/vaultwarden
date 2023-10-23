@@ -6,3 +6,10 @@ ansible/access
 mvarela-io.pem
 terraform/.terraform/
 terraform/
+argocd
+app-vaultwarden
+application-working
+argocd
+traefik
+trivy-ok
+trivy
