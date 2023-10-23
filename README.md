@@ -29,7 +29,7 @@ I added security with DevSecOps by using Trivy to scan Docker images for critica
 
 - I created Kubernetes manifests using Jenkins pipelines to automate deployment configurations.
 - I installed Argo CD on the Kubernetes cluster to ensure continuous deployments and application management.
-![Argo CD](argo-cd.jpg)
+![Argo CD](argocd.jpg)
 - I used Traefik as the ingress controller to route application traffic.
 ![Traefik](traefik.jpg)
 
