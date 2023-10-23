@@ -22,9 +22,9 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: vaultwarden-data
-              mountPath: /app/vaultwarden-data
+            - name: vaultwarde-data 
+              mountPath: /app/vaultwarden-data 
       volumes:
-        - name: vaultwarden-data
+        - name: data
           persistentVolumeClaim:
             claimName: vaultwarden-pvc
