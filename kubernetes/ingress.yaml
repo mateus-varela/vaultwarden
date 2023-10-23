@@ -13,7 +13,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`vaultwarden.mvarela.io`) && PathPrefix(`/`)
+    - match: Host(`example.com`) && PathPrefix(`/`)
       kind: Rule
       services:
         - name: vaultwarden-service

@@ -2,10 +2,10 @@ pipeline {
     agent { label 'Jenkins-Agent' }
 
     environment {
-        AWS_ACCOUNT_ID="878893543361"
-        AWS_DEFAULT_REGION="us-east-1"
-        IMAGE_REPO_NAME="mvarela-io/vaultwarden"
-        IMAGE_TAG="latest"
+        AWS_ACCOUNT_ID="YOUR_ACCOUNT_ID"
+        AWS_DEFAULT_REGION="region" // e.g us-east-1
+        IMAGE_REPO_NAME="YOUR_REPO_NAME"
+        IMAGE_TAG="YOUR_IMAGE_TAG" // eg. latest, v1
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
 
@@ -27,7 +27,7 @@ pipeline {
 
         stage("Checkout from SCM"){
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/mateus-varela/vaultwarden'
+                git branch: 'main', credentialsId: 'github', url: 'YOUR_GITHUB_URL'
             }
         }
 

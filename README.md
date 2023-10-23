@@ -7,6 +7,7 @@ Welcome to my project portfolio! This repository documents my journey in creatin
 ## Phase 1: Infrastructure as Code
 
 - I used Terraform to create infrastructure in AWS as code. All EC2 instances, networks, EKS, ECR and necessary resources were automatically provisioned.
+- Used terraform modules to build a modular project, possibiliting use the same code to another project, and keep improving and addings new modules to my code.
 - I integrated infrastructure deployment with GitHub Actions, ensuring that changes to infrastructure code were efficiently deployed.
 - Using Ansible, I automated the installation and configuration of Jenkins on the newly created EC2 instances.
 
@@ -23,8 +24,8 @@ Welcome to my project portfolio! This repository documents my journey in creatin
 
 ## Phase 4: Monitoring
 
-- I implemented a robust monitoring system using Prometheus, VictoriaMetrics, and Grafana.
-- I ensured that the application's health was monitored and that important metrics were visible in real-time.
+- Loading... This part will be done in the next months. New projects coming for now.
+
 
 ## Considerations
 
@@ -36,6 +37,8 @@ Welcome to my project portfolio! This repository documents my journey in creatin
 This is an overview of my project, demonstrating my skills in DevOps, automation, security, and container orchestration. Feel free to explore the details in each phase of this repository to learn more about the technologies and processes involved.
 
 Thank you for checking out my project portfolio!
+
+* I also added a README.md file in terraform, to give you more details about how to use it.
 
 ## Contact
 
