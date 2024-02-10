@@ -21,9 +21,10 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
-      - name: Terraform Apply
+      - name: Terraform
         id:   apply
         run: |
           cd terraform/
+          terraform init
           terraform destroy -auto-approve
           
