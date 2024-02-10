@@ -1,0 +1,37 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_ACCOUNT_ID: "YOUR_ACCOUNT_ID"
+  AWS_DEFAULT_REGION: "region" # e.g us-east-1
+  IMAGE_REPO_NAME: "YOUR_REPO_NAME"
+  IMAGE_TAG: "YOUR_IMAGE_TAG" # eg. latest, v1
+  REPOSITORY_URI: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_DEFAULT_REGION }}.amazonaws.com/${{ env.IMAGE_REPO_NAME }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout from SCM
+        uses: actions/checkout@v2
+
+      - name: Login to AWS ECR
+        run: |
+          aws ecr get-login-password --region ${{ env.AWS_DEFAULT_REGION }} | docker login --username AWS --password-stdin ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_DEFAULT_REGION }}.amazonaws.com
+
+      - name: Pull Docker Image from Docker Hub
+        run: docker pull vaultwarden/server
+
+      - name: Tag Docker Image
+        run: docker tag vaultwarden/server ${{ env.REPOSITORY_URI }}:${{ env.IMAGE_TAG }}
+
+      - name: Trivy Scan and Docker Image Push
+        run: |
+          docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${{ env.REPOSITORY_URI }}:${{ env.IMAGE_TAG }} --no-progress --exit-code 0 --format table
+          echo "Scan completed. Proceeding with the push to ECR."
+          docker push ${{ env.REPOSITORY_URI }}:${{ env.IMAGE_TAG }}
