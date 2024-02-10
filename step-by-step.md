@@ -21,6 +21,11 @@ usuario admin
 
 acessar com localhost:8080
 
+build pipeline da imagem dockerfile
+
+environment:
+      ADMIN_TOKEN=randomPassword40characters
+
 6 - configurar argo cd para puxar o repositorio e pasta certa do github
 
 7 - aplicar clusterissuer do cert-manager
@@ -28,3 +33,4 @@ acessar com localhost:8080
 8 - criar namespace vaultwarden
 
 CUIDAR COM STORAGE CLASS TEM QUE SER IMMEDIATE!
+

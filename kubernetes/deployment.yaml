@@ -20,7 +20,10 @@ spec:
             - containerPort: 80
           volumeMounts:
             - name: data
-              mountPath: /app/vaultwarden-data 
+              mountPath: /app/vaultwarden-data
+          env:
+            - name: ADMIN_TOKEN
+              value: AD89UKLdsandklJ9A3289KA
       volumes:
         - name: data
           persistentVolumeClaim:
