@@ -15,6 +15,7 @@
 - Demonstração da estrutura do Terraform
 - Explicar que é modular, e que não vou focar em escrever o código, mas dar uma visão geral apenas
 - Escrever código do bucket e deploy manual via maquina
+- Explicar que vou fazer deploy já do certmanager, ingress contorller e argo-cd tudo via pipeline com terraform
 - Implementação do tfstate remoto no AWS S3.
 - Enquanto o código fica sendo deployado, explicar algumas coisas
 - Explicar sobre boas praticas de terraform (OpenTofu)
