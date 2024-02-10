@@ -26,5 +26,6 @@ jobs:
         run: |
           cd terraform/
           terraform init
-          terraform destroy -auto-approve
-          
+          terraform validate
+          terraform plan 
+          terraform apply -auto-approve
