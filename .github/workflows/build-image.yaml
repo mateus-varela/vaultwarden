@@ -1,9 +1,7 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 env:
   AWS_ACCOUNT_ID: "YOUR_ACCOUNT_ID"
