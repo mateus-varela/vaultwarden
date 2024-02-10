@@ -26,3 +26,5 @@ acessar com localhost:8080
 7 - aplicar clusterissuer do cert-manager
 
 8 - criar namespace vaultwarden
+
+CUIDAR COM STORAGE CLASS TEM QUE SER IMMEDIATE!
