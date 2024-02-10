@@ -63,12 +63,12 @@ module "EKS" {
 
 }
 
-module "ECR" {
-  source           = "./_modules/ecr"
-  ecr_name         = var.ecr_name
-  tags             = var.tags
-  image_mutability = var.image_mutability
-}
+# module "ECR" {
+#   source           = "./_modules/ecr"
+#   ecr_name         = var.ecr_name
+#   tags             = var.tags
+#   image_mutability = var.image_mutability
+# }
 
 
 # module "EC2_JENKINS_MASTER" {

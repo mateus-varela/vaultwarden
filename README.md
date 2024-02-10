@@ -2,7 +2,7 @@
 
 Welcome to my project portfolio! This repository documents my journey in creating a web application in several phases using modern technologies and tools. Here are the key milestones of the project:
 
-![App Structure](app-vaultwarden.jpeg)
+![App Structure](images/app-vaultwarden.jpeg)
 
 ## Phase 1: Infrastructure as Code
 
@@ -15,8 +15,8 @@ Welcome to my project portfolio! This repository documents my journey in creatin
 
 - I configured build and deploy pipelines for my application using Jenkins, ensuring that changes were automatically tested, compiled, and deployed.
 
-![Trivy Scan Fail](trivy.jpg)
-![Trivy Scan Done](trivy-ok.jpg)
+![Trivy Scan Fail](images/trivy.jpg)
+![Trivy Scan Done](images/trivy-ok.jpg)
 
 I added security with DevSecOps by using Trivy to scan Docker images for critical vulnerabilities before pushing them to Amazon Elastic Container Registry (ECR).
 
@@ -29,9 +29,9 @@ I added security with DevSecOps by using Trivy to scan Docker images for critica
 
 - I created Kubernetes manifests using Jenkins pipelines to automate deployment configurations.
 - I installed Argo CD on the Kubernetes cluster to ensure continuous deployments and application management.
-![Argo CD](argocd.jpg)
+![Argo CD](images/argocd.jpg)
 - I used Traefik as the ingress controller to route application traffic.
-![Traefik](traefik.jpg)
+![Traefik](images/traefik.jpg)
 
 
 ## Phase 4: Monitoring
@@ -51,7 +51,7 @@ I added security with DevSecOps by using Trivy to scan Docker images for critica
 
 **You can check the results of the project in the attached image**
 
-![Vaultwarden](application-working.jpg)
+![Vaultwarden](images/application-working.jpg)
 
 This is an overview of my project, demonstrating my skills in DevOps, automation, security, and container orchestration. Feel free to explore the details in each phase of this repository to learn more about the technologies and processes involved.
 

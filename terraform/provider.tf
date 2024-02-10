@@ -78,10 +78,10 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket  = "terraform-mvarela-io-remote-state"
-    key     = "mvarela-io/vaultwarden/terraform.tfstate"
-    region  = "us-east-1"
-    encrypt = true
-  }
+  # backend "s3" {
+  #   bucket  = "terraform-mvarela-io-remote-state"
+  #   key     = "mvarela-io/vaultwarden/terraform.tfstate"
+  #   region  = "us-east-1"
+  #   encrypt = true
+  # }
 }
