@@ -1,27 +1,27 @@
-# module "CERTMANAGER" {
-#   source = "./_modules/helm-release"
+module "CERTMANAGER" {
+  source = "./_modules/helm-release"
 
-#   namespace  = "cert-manager"
-#   repository = "https://charts.jetstack.io"
+  namespace  = "cert-manager"
+  repository = "https://charts.jetstack.io"
 
-#   app = {
-#     name          = "cert-manager"
-#     chart         = "cert-manager"
-#     version       = null
-#     force_update  = true
-#     wait          = true
-#     recreate_pods = true
-#     max_history   = 0
-#     lint          = true
-#   }
+  app = {
+    name          = "cert-manager"
+    chart         = "cert-manager"
+    version       = null
+    force_update  = true
+    wait          = true
+    recreate_pods = true
+    max_history   = 0
+    lint          = true
+  }
 
-#   set = [
-#     {
-#       name  = "installCRDs"
-#       value = "true"
-#     }
-#   ]
-# }
+  set = [
+    {
+      name  = "installCRDs"
+      value = "true"
+    }
+  ]
+}
 
 module "NGINX_INGRESS_CONTROLLER" {
   source             = "./_modules/helm-release/nginx-ingress-controller"
@@ -30,24 +30,24 @@ module "NGINX_INGRESS_CONTROLLER" {
   public_subnets_ids = module.SUBNETS.public_subnets
 }
 
-# module "ARGOCD" {
-#   source = "./_modules/helm-release"
+module "ARGOCD" {
+  source = "./_modules/helm-release"
 
-#   namespace  = "argocd"
-#   repository = "https://argoproj.github.io/argo-helm"
+  namespace  = "argocd"
+  repository = "https://argoproj.github.io/argo-helm"
 
-#   app = {
-#     create_namespace = true
-#     name             = "argocd"
-#     force_update     = true
-#     wait             = true
-#     recreate_pods    = true
-#     chart            = "argo-cd"
-#     version          = "3.35.4"
-#     timeout          = var.timeout_seconds
-#   }
+  app = {
+    create_namespace = true
+    name             = "argocd"
+    force_update     = true
+    wait             = true
+    recreate_pods    = true
+    chart            = "argo-cd"
+    version          = "3.35.4"
+    timeout          = var.timeout_seconds
+  }
 
-#   values = [file("./_modules/helm-release/argocd-values.yaml")]
+  values = [file("./_modules/helm-release/argocd-values.yaml")]
 
 # # helm install argocd -n argocd -f values/argocd.yaml
 # # k port-forward svc/argocd-server -n argocd 8080:80
