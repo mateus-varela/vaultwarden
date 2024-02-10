@@ -49,6 +49,7 @@ module "ARGOCD" {
 
   values = [file("./_modules/helm-release/argocd-values.yaml")]
 
+}
 # # helm install argocd -n argocd -f values/argocd.yaml
 # # k port-forward svc/argocd-server -n argocd 8080:80
 # # k get secrets argocd-initial-admin-secret -o yaml -n argocd
